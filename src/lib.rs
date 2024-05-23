@@ -227,7 +227,7 @@ macro_rules! scoped_thread_local {
                 use ::std::ops::{FnOnce, Drop};
                 use ::std::thread::LocalKey;
 
-                thread_local!(static FOO: Cell<Option<Hkt<'static>>> = {
+                thread_local!(static FOO: Cell<Option<Hkt<'static>>> = const {
                     Cell::new(None)
                 });
 
@@ -305,7 +305,7 @@ macro_rules! scoped_thread_local {
 
                 use $crate::ReborrowMut;
 
-                thread_local!(static FOO: Cell<Option<Hkt<'static>>> = {
+                thread_local!(static FOO: Cell<Option<Hkt<'static>>> = const {
                     Cell::new(None)
                 });
 
@@ -385,7 +385,7 @@ macro_rules! scoped_thread_local {
         $(#[$attrs])*
         $vis static $name: $crate::ScopedKey<$ty> = $crate::ScopedKey {
             inner: {
-                thread_local!(static FOO: ::std::cell::Cell<::std::option::Option<&'static $ty>> = {
+                thread_local!(static FOO: ::std::cell::Cell<::std::option::Option<&'static $ty>> = const {
                     ::std::cell::Cell::new(None)
                 });
                 &FOO
@@ -396,7 +396,7 @@ macro_rules! scoped_thread_local {
         $(#[$attrs])*
         $vis static $name: $crate::ScopedKeyMut<$ty> = $crate::ScopedKeyMut {
             inner: {
-                thread_local!(static FOO: ::std::cell::Cell<::std::option::Option<&'static mut $ty>> = {
+                thread_local!(static FOO: ::std::cell::Cell<::std::option::Option<&'static mut $ty>> = const {
                     ::std::cell::Cell::new(None)
                 });
                 &FOO
